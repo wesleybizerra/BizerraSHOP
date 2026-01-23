@@ -19,12 +19,9 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     
     setIsLoading(true);
     try {
-      // ⚠️ IMPORTANTE: Verifique se esta URL aparece como "Domain" no seu painel do Railway
-      // Se o seu projeto no Railway tem outro nome, substitua aqui:
-      const BACKEND_URL = 'bizerrashop-production.up.railway.app'; 
+      // ⚠️ ESTA URL ABAIXO DEVE SER A QUE APARECE NO SEU PAINEL DO RAILWAY (DOMAINS)
+      const BACKEND_URL = 'https://bizerrashop-production.up.railway.app'; 
       
-      console.log('Tentando conectar em:', `${BACKEND_URL}/create_preference`);
-
       const response = await fetch(`${BACKEND_URL}/create_preference`, {
         method: 'POST',
         headers: {
@@ -47,7 +44,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
       }
     } catch (error: any) {
       console.error('Erro de Checkout:', error);
-      alert(`Erro de conexão: ${error.message || 'O servidor do Railway não respondeu'}. Verifique se a URL do backend está correta.`);
+      alert('Erro de conexão com o servidor. Verifique se o backend no Railway está ativo e se a URL está correta.');
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +54,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-[100] overflow-hidden">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
       <div className="absolute inset-y-0 right-0 max-w-full flex">
-        <div className="w-screen max-w-md animate-in slide-in-from-right duration-300">
+        <div className="w-screen max-w-md">
           <div className="h-full flex flex-col bg-white shadow-2xl rounded-l-3xl overflow-hidden">
             <div className="px-6 py-6 bg-gray-50 border-b flex items-center justify-between">
               <h2 className="text-xl font-bold flex items-center gap-2">
