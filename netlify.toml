@@ -1,0 +1,15 @@
+
+[build]
+  # Se seus arquivos estiverem dentro de uma pasta chamada 'raiz' no GitHub, mantenha a linha abaixo.
+  # Se os arquivos estiverem soltos no GitHub (na pasta principal), remova a linha 'base = "raiz"'.
+  base = "raiz"
+  command = "npm run build"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "20"
