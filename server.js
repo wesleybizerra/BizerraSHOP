@@ -7,23 +7,23 @@ const { MercadoPagoConfig, Preference } = require('mercadopago');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração do Mercado Pago
+// Token padrão de teste se a env não estiver configurada (substitua no painel do Railway)
+const MP_TOKEN = process.env.MP_ACCESS_TOKEN || 'APP_USR-5486188186277562-123109-0c5bb1142056dd529240d38a493ce08d-650681524';
+
 const client = new MercadoPagoConfig({ 
-  accessToken: process.env.MP_ACCESS_TOKEN || 'APP_USR-5486188186277562-123109-0c5bb1142056dd529240d38a493ce08d-650681524' 
+  accessToken: MP_TOKEN 
 });
 
-// Middleware
 app.use(express.json());
-app.use(cors({
-  origin: '*' // Em produção, substitua pela URL do seu Netlify para maior segurança
-}));
+app.use(cors({ origin: '*' }));
 
-// Rota para criar preferência de pagamento
 app.post('/create_preference', async (req, res) => {
   try {
     const { items } = req.body;
+    if (!items || items.length === 0) {
+      return res.status(400).json({ error: 'Carrinho vazio' });
+    }
 
-    // Formata os itens para o padrão do Mercado Pago
     const itemsFormatted = items.map(item => ({
       id: item.id,
       title: item.name,
@@ -33,7 +33,6 @@ app.post('/create_preference', async (req, res) => {
     }));
 
     const preference = new Preference(client);
-
     const result = await preference.create({
       body: {
         items: itemsFormatted,
@@ -51,14 +50,14 @@ app.post('/create_preference', async (req, res) => {
       init_point: result.init_point 
     });
   } catch (error) {
-    console.error('Erro ao criar preferência:', error);
-    res.status(500).json({ error: 'Erro interno ao processar o pagamento' });
+    console.error('Erro MP:', error);
+    res.status(500).json({ error: 'Erro ao processar pagamento' });
   }
 });
 
-// Rota de saúde para o Railway
-app.get('/health', (req, res) => res.send('Bizerra Shop API is Running!'));
+app.get('/', (req, res) => res.send('API Bizerra Shop Ativa!'));
+app.get('/health', (req, res) => res.send('OK'));
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+  console.log(`🚀 Server on port ${PORT}`);
 });
