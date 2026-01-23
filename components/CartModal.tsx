@@ -19,9 +19,8 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     
     setIsLoading(true);
     try {
-      // Aqui você deve colocar a URL do seu Railway após o deploy
-      // Para testes locais, usa localhost:3000
-      const BACKEND_URL = 'https://SUA-URL-DO-RAILWAY.up.railway.app'; 
+      // IMPORTANTE: Use a URL que o Railway te deu aqui!
+      const BACKEND_URL = 'https://bizerrashop-production.up.railway.app'; 
       
       const response = await fetch(`${BACKEND_URL}/create_preference`, {
         method: 'POST',
@@ -38,11 +37,11 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
       if (data.init_point) {
         window.location.href = data.init_point;
       } else {
-        alert('Erro ao gerar link de pagamento. Tente novamente.');
+        alert('Erro ao gerar link de pagamento.');
       }
     } catch (error) {
       console.error(error);
-      alert('Ocorreu um erro ao conectar com o servidor. Verifique sua conexão.');
+      alert('Erro de conexão com o servidor do Railway.');
     } finally {
       setIsLoading(false);
     }
@@ -78,53 +77,29 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                     <ShoppingBag size={40} className="text-gray-300" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-800">Seu carrinho está vazio</h3>
-                  <p className="text-gray-500 mb-6">Explore nossos produtos e encontre algo incrível.</p>
                   <button 
                     onClick={onClose}
-                    className="px-6 py-3 bg-orange-500 text-white rounded-full font-bold hover:bg-orange-600 transition-colors"
+                    className="mt-4 px-6 py-2 bg-orange-500 text-white rounded-full"
                   >
-                    Voltar às compras
+                    Ver Produtos
                   </button>
                 </div>
               ) : (
                 cart.map(item => (
-                  <div key={item.id} className="flex gap-4 group">
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
-                      className="w-20 h-20 object-cover rounded-2xl shadow-sm border"
-                    />
+                  <div key={item.id} className="flex gap-4">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-xl" />
                     <div className="flex-grow">
-                      <div className="flex justify-between items-start mb-1">
-                        <h4 className="font-bold text-gray-800 leading-tight">{item.name}</h4>
-                        <button 
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-gray-400 hover:text-red-500 transition-colors p-1"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                      <div className="flex justify-between">
+                        <h4 className="font-bold">{item.name}</h4>
+                        <button onClick={() => removeFromCart(item.id)}><Trash2 size={16} className="text-red-400" /></button>
                       </div>
-                      <p className="text-gray-500 text-xs mb-3">Unitário: R$ {item.price.toFixed(2)}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 bg-gray-100 rounded-full px-2 py-1">
-                          <button 
-                            onClick={() => updateQuantity(item.id, -1)}
-                            className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full shadow-sm transition-all"
-                          >
-                            <Minus size={14} />
-                          </button>
-                          <span className="font-bold w-4 text-center">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.id, 1)}
-                            className="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full shadow-sm transition-all"
-                          >
-                            <Plus size={14} />
-                          </button>
+                      <div className="flex justify-between items-center mt-2">
+                        <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-2">
+                          <button onClick={() => updateQuantity(item.id, -1)}><Minus size={14} /></button>
+                          <span className="font-bold">{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, 1)}><Plus size={14} /></button>
                         </div>
-                        <span className="font-bold text-gray-900">
-                          R$ {(item.price * item.quantity).toFixed(2)}
-                        </span>
+                        <span className="font-bold">R$ {(item.price * item.quantity).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -133,27 +108,17 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
             </div>
 
             {cart.length > 0 && (
-              <div className="p-6 bg-gray-50 border-t space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500 font-medium">Subtotal</span>
-                  <span className="text-2xl font-bold text-gray-900">R$ {totalPrice.toFixed(2)}</span>
+              <div className="p-6 bg-gray-50 border-t">
+                <div className="flex justify-between mb-4">
+                  <span className="text-gray-500">Total</span>
+                  <span className="text-2xl font-bold">R$ {totalPrice.toFixed(2)}</span>
                 </div>
                 <button 
                   onClick={handleCheckout}
                   disabled={isLoading}
-                  className="w-full bg-orange-500 text-white py-4 rounded-2xl font-bold text-lg hover:bg-orange-600 transition-all shadow-xl flex items-center justify-center gap-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full bg-orange-500 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-orange-600 transition-colors disabled:opacity-50"
                 >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="animate-spin" />
-                      Processando...
-                    </>
-                  ) : (
-                    <>
-                      Finalizar Compra
-                      <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </>
-                  )}
+                  {isLoading ? <Loader2 className="animate-spin" /> : <><ArrowRight /> Finalizar no Mercado Pago</>}
                 </button>
               </div>
             )}
