@@ -1,5 +1,14 @@
 
 [build]
+  command = "npm run build"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build]
   # Esta linha 'base' diz ao Netlify para entrar na pasta 'raiz' antes de começar
   base = "raiz"
   command = "npm run build"
