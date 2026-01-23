@@ -1,13 +1,12 @@
 
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { MercadoPagoConfig, Preference } = require('mercadopago');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Token padrão de teste se a env não estiver configurada (substitua no painel do Railway)
 const MP_TOKEN = process.env.MP_ACCESS_TOKEN || 'APP_USR-5486188186277562-123109-0c5bb1142056dd529240d38a493ce08d-650681524';
 
 const client = new MercadoPagoConfig({ 
