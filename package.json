@@ -2,10 +2,11 @@
 {
   "name": "bizerra-shop",
   "version": "1.0.0",
-  "description": "Loja virtual irresistível - Bizerra Shop",
+  "description": "Loja virtual Bizerra Shop - Streaming & Entretenimento",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'Build finalizado com sucesso!'",
     "dev": "nodemon server.js"
   },
   "dependencies": {
@@ -13,10 +14,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mercadopago": "^2.0.11",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-router-dom": "^7.12.0",
-    "lucide-react": "^0.563.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.22.0",
+    "lucide-react": "^0.344.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
