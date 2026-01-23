@@ -19,8 +19,12 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     
     setIsLoading(true);
     try {
-      const BACKEND_URL = 'https://bizerrashop-production.up.railway.app'; 
+      // ⚠️ IMPORTANTE: Verifique se esta URL aparece como "Domain" no seu painel do Railway
+      // Se o seu projeto no Railway tem outro nome, substitua aqui:
+      const BACKEND_URL = 'bizerrashop-production.up.railway.app'; 
       
+      console.log('Tentando conectar em:', `${BACKEND_URL}/create_preference`);
+
       const response = await fetch(`${BACKEND_URL}/create_preference`, {
         method: 'POST',
         headers: {
@@ -29,18 +33,21 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
         body: JSON.stringify({ items: cart }),
       });
 
-      if (!response.ok) throw new Error('Erro ao processar checkout');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erro no servidor');
+      }
 
       const data = await response.json();
       
       if (data.init_point) {
         window.location.href = data.init_point;
       } else {
-        alert('Erro ao gerar link de pagamento.');
+        alert('Erro: O Mercado Pago não retornou o link de pagamento.');
       }
-    } catch (error) {
-      console.error(error);
-      alert('Erro de conexão com o servidor do Railway.');
+    } catch (error: any) {
+      console.error('Erro de Checkout:', error);
+      alert(`Erro de conexão: ${error.message || 'O servidor do Railway não respondeu'}. Verifique se a URL do backend está correta.`);
     } finally {
       setIsLoading(false);
     }
@@ -48,11 +55,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden">
-      <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
-        onClick={onClose}
-      />
-      
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
       <div className="absolute inset-y-0 right-0 max-w-full flex">
         <div className="w-screen max-w-md animate-in slide-in-from-right duration-300">
           <div className="h-full flex flex-col bg-white shadow-2xl rounded-l-3xl overflow-hidden">
@@ -61,10 +64,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                 <ShoppingBag className="text-orange-500" />
                 Seu Carrinho ({totalItems})
               </h2>
-              <button 
-                onClick={onClose} 
-                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
-              >
+              <button onClick={onClose} className="p-2 hover:bg-gray-200 rounded-full transition-colors">
                 <X size={24} />
               </button>
             </div>
@@ -76,7 +76,6 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                     <ShoppingBag size={40} />
                   </div>
                   <h3 className="text-lg font-bold text-gray-800">Seu carrinho está vazio</h3>
-                  <button onClick={onClose} className="mt-4 px-6 py-2 bg-orange-500 text-white rounded-full">Ver Produtos</button>
                 </div>
               ) : (
                 cart.map(item => (
