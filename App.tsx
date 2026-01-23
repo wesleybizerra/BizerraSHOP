@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
+// Changed import from 'react-router-dom' to 'react-router' to fix missing exports in the environment
+import { HashRouter as Router, Routes, Route, Link } from 'react-router';
 import { ShoppingCart, Menu, X, Facebook, Instagram, Youtube, Send, Info, Home as HomeIcon, Package, Phone } from 'lucide-react';
 import { CartProvider, useCart } from './context/CartContext';
 import Home from './pages/Home';
@@ -61,9 +62,9 @@ const Navbar: React.FC = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-gray-900 border-t border-gray-800 animate-in slide-in-from-top duration-300">
             <div className="flex flex-col p-4 gap-4">
-              <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg"><HomeIcon size={20}/> Início</Link>
-              <Link to="/produtos" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg"><Package size={20}/> Produtos</Link>
-              <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg"><Phone size={20}/> Contato</Link>
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg font-bold"><HomeIcon size={20}/> Início</Link>
+              <Link to="/produtos" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg font-bold"><Package size={20}/> Produtos</Link>
+              <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 py-2 text-lg font-bold"><Phone size={20}/> Contato</Link>
             </div>
           </div>
         )}
@@ -94,17 +95,19 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-bold mb-4">Siga-nos</h3>
-            <div className="flex justify-center md:justify-start gap-4">
+            <h3 className="text-xl font-bold mb-4 text-orange-400">Conecte-se</h3>
+            <div className="flex justify-center md:justify-start gap-5">
               <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-orange-600 transition-colors"><Instagram size={20} /></a>
               <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-red-600 transition-colors"><Youtube size={20} /></a>
               <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-blue-600 transition-colors"><Facebook size={20} /></a>
-              <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-green-600 transition-colors"><Send size={20} /></a>
+              <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noreferrer" className="bg-white p-1 rounded-full hover:scale-110 transition-transform w-9 h-9 flex items-center justify-center">
+                <img src={SOCIAL_LINKS.whatsapp_icon} alt="WA" className="w-full h-full object-contain" />
+              </a>
             </div>
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-          <p>© 2024 BIZERRA SHOP — Conectando você ao melhor do entretenimento digital!</p>
+          <p>© 2026 BIZERRA SHOP — Conectando você ao melhor do entretenimento digital!</p>
         </div>
       </div>
     </footer>
