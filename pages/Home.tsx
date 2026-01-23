@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+// Changed import from 'react-router-dom' to 'react-router' to resolve missing export errors
+import { Link } from 'react-router';
 import { Rocket, Heart, ShieldCheck, Star } from 'lucide-react';
 
 const Home: React.FC = () => {
