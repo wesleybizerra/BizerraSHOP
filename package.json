@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Build finalizado com sucesso!'",
+    "build": "echo 'Build OK'",
     "dev": "nodemon server.js"
   },
   "dependencies": {
@@ -16,10 +16,13 @@
     "mercadopago": "^2.0.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.22.0",
-    "lucide-react": "^0.344.0"
+    "react-router-dom": "^7.1.0",
+    "lucide-react": "^0.474.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
