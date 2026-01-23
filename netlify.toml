@@ -1,12 +1,12 @@
 
 [build]
-  # Se seus arquivos estiverem dentro de uma pasta chamada 'raiz' no GitHub, mantenha a linha abaixo.
-  # Se os arquivos estiverem soltos no GitHub (na pasta principal), remova a linha 'base = "raiz"'.
+  # Esta linha 'base' diz ao Netlify para entrar na pasta 'raiz' antes de começar
   base = "raiz"
   command = "npm run build"
   publish = "."
 
 [[redirects]]
+  # Garante que as rotas do React funcionem (F5 não dá erro 404)
   from = "/*"
   to = "/index.html"
   status = 200
