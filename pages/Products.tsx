@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { INITIAL_PRODUCTS } from '../constants';
 import { useCart } from '../context/CartContext';
-// Fix: Added 'Package' to the imports from lucide-react
-import { ShoppingCart, Plus, Check, Package } from 'lucide-react';
+import { Plus, Check, Package, X, ChevronRight } from 'lucide-react';
+import { Product, Variation } from '../types';
 
 const Products: React.FC = () => {
   const { addToCart } = useCart();
   const [filter, setFilter] = useState('Todos');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
 
   const categories = ['Todos', ...Array.from(new Set(INITIAL_PRODUCTS.map(p => p.category)))];
@@ -16,10 +17,11 @@ const Products: React.FC = () => {
     ? INITIAL_PRODUCTS 
     : INITIAL_PRODUCTS.filter(p => p.category === filter);
 
-  const handleAddToCart = (product: any) => {
-    addToCart(product);
-    setAddedId(product.id);
+  const handleAddToCart = (product: Product, variation: Variation) => {
+    addToCart(product, variation);
+    setAddedId(`${product.id}_${variation.name}`);
     setTimeout(() => setAddedId(null), 2000);
+    setSelectedProduct(null); // Fecha o modal de opções após adicionar
   };
 
   return (
@@ -39,7 +41,7 @@ const Products: React.FC = () => {
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                   filter === cat 
                     ? 'bg-orange-500 text-white shadow-md' 
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
                 {cat}
@@ -52,7 +54,7 @@ const Products: React.FC = () => {
           {filteredProducts.map(product => (
             <div 
               key={product.id} 
-              className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
+              className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col"
             >
               <div className="relative h-48 overflow-hidden">
                 <img 
@@ -67,27 +69,23 @@ const Products: React.FC = () => {
                 </div>
               </div>
               
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-bold mb-2 group-hover:text-orange-600 transition-colors">{product.name}</h3>
                 <p className="text-gray-500 text-sm mb-4 line-clamp-2">{product.description}</p>
                 
-                <div className="flex items-center justify-between mt-auto">
+                <div className="mt-auto pt-4 flex items-center justify-between">
                   <div>
-                    <span className="text-sm text-gray-400">A partir de</span>
-                    <div className="text-2xl font-bold text-gray-900">
-                      R$ {product.price.toFixed(2).replace('.', ',')}
+                    <span className="text-xs text-gray-400 font-bold uppercase tracking-tighter">A partir de</span>
+                    <div className="text-xl font-extrabold text-gray-900">
+                      R$ {Math.min(...product.variations.map(v => v.price)).toFixed(2).replace('.', ',')}
                     </div>
                   </div>
                   
                   <button 
-                    onClick={() => handleAddToCart(product)}
-                    className={`p-3 rounded-2xl transition-all flex items-center justify-center ${
-                      addedId === product.id 
-                        ? 'bg-green-500 text-white' 
-                        : 'bg-orange-500 text-white hover:bg-orange-600 active:scale-95'
-                    }`}
+                    onClick={() => setSelectedProduct(product)}
+                    className="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-orange-600 transition-all flex items-center gap-2 shadow-lg shadow-orange-200"
                   >
-                    {addedId === product.id ? <Check size={24} /> : <Plus size={24} />}
+                    Ver Opções <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
@@ -102,6 +100,41 @@ const Products: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Variation Selection Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}></div>
+          <div className="relative bg-white w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+              <h2 className="text-2xl font-bold">Opções de {selectedProduct.name}</h2>
+              <button onClick={() => setSelectedProduct(null)} className="p-2 hover:bg-gray-200 rounded-full transition-colors">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="p-6 max-h-[60vh] overflow-y-auto space-y-4">
+              {selectedProduct.variations.map((v, idx) => (
+                <div 
+                  key={idx} 
+                  className="p-5 border-2 border-gray-100 rounded-2xl flex items-center justify-between hover:border-orange-500 hover:bg-orange-50 transition-all cursor-pointer group"
+                  onClick={() => handleAddToCart(selectedProduct, v)}
+                >
+                  <div className="flex-grow pr-4">
+                    <h4 className="font-bold text-gray-800 leading-tight mb-1">{v.name}</h4>
+                    <span className="text-2xl font-black text-orange-600">R$ {v.price.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <div className="bg-orange-500 text-white p-3 rounded-xl group-hover:scale-110 transition-transform">
+                    {addedId === `${selectedProduct.id}_${v.name}` ? <Check size={20} /> : <Plus size={20} />}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="p-4 bg-gray-100 text-center text-sm text-gray-500 font-medium">
+              Selecione uma opção para adicionar ao carrinho.
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
