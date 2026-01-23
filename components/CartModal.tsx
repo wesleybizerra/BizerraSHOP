@@ -19,7 +19,6 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     
     setIsLoading(true);
     try {
-      // IMPORTANTE: Use a URL que o Railway te deu aqui!
       const BACKEND_URL = 'https://bizerrashop-production.up.railway.app'; 
       
       const response = await fetch(`${BACKEND_URL}/create_preference`, {
@@ -73,16 +72,11 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
             <div className="flex-grow overflow-y-auto px-6 py-4 space-y-6">
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                  <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <ShoppingBag size={40} className="text-gray-300" />
+                  <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-gray-300">
+                    <ShoppingBag size={40} />
                   </div>
                   <h3 className="text-lg font-bold text-gray-800">Seu carrinho está vazio</h3>
-                  <button 
-                    onClick={onClose}
-                    className="mt-4 px-6 py-2 bg-orange-500 text-white rounded-full"
-                  >
-                    Ver Produtos
-                  </button>
+                  <button onClick={onClose} className="mt-4 px-6 py-2 bg-orange-500 text-white rounded-full">Ver Produtos</button>
                 </div>
               ) : (
                 cart.map(item => (
@@ -118,7 +112,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                   disabled={isLoading}
                   className="w-full bg-orange-500 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-orange-600 transition-colors disabled:opacity-50"
                 >
-                  {isLoading ? <Loader2 className="animate-spin" /> : <><ArrowRight /> Finalizar no Mercado Pago</>}
+                  {isLoading ? <Loader2 className="animate-spin" /> : <><ArrowRight /> Finalizar Compra</>}
                 </button>
               </div>
             )}
