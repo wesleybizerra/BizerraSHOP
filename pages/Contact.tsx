@@ -8,7 +8,7 @@ const Contact: React.FC = () => {
     <div className="py-20 bg-gray-50 animate-in fade-in duration-500">
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Entre em Contato</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Entre em Contato</h1>
           <p className="text-gray-600 max-w-xl mx-auto">
             Estamos prontos para tirar suas dúvidas e ajudar você a encontrar o melhor plano. Escolha o canal de sua preferência.
           </p>
@@ -18,8 +18,8 @@ const Contact: React.FC = () => {
           {/* Contact Info */}
           <div className="space-y-8">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex items-start gap-6 hover:shadow-md transition-shadow">
-              <div className="bg-orange-100 text-orange-600 p-4 rounded-2xl">
-                <MessageCircle size={32} />
+              <div className="bg-orange-100 p-2 rounded-2xl flex-shrink-0">
+                <img src={SOCIAL_LINKS.whatsapp_icon} alt="WhatsApp" className="w-12 h-12 object-contain" />
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-2">WhatsApp</h3>
@@ -28,9 +28,9 @@ const Contact: React.FC = () => {
                   href={SOCIAL_LINKS.whatsapp} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="text-orange-600 font-bold hover:underline"
+                  className="inline-flex items-center gap-2 bg-orange-500 text-white px-5 py-2 rounded-xl font-bold hover:bg-orange-600 transition-colors"
                 >
-                  Abrir Conversa Agora →
+                  Abrir Conversa Agora
                 </a>
               </div>
             </div>
@@ -43,10 +43,10 @@ const Contact: React.FC = () => {
                 <h3 className="text-xl font-bold mb-2">E-mail</h3>
                 <p className="text-gray-500 mb-4">Envie-nos uma mensagem para suporte técnico ou parcerias.</p>
                 <a 
-                  href="mailto:contato@bizerrashop.com" 
-                  className="text-blue-600 font-bold hover:underline"
+                  href="mailto:wesleybizerra@hotmail.com" 
+                  className="text-blue-600 font-bold hover:underline break-all"
                 >
-                  contato@bizerrashop.com →
+                  wesleybizerra@hotmail.com →
                 </a>
               </div>
             </div>
@@ -71,19 +71,19 @@ const Contact: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 bg-gray-900 rounded-2xl hover:bg-orange-600 transition-colors group">
                   <Instagram className="group-hover:scale-110 transition-transform" />
-                  <span>Instagram</span>
+                  <span className="font-bold">Instagram</span>
                 </a>
                 <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 bg-gray-900 rounded-2xl hover:bg-red-600 transition-colors group">
                   <Youtube className="group-hover:scale-110 transition-transform" />
-                  <span>YouTube</span>
+                  <span className="font-bold">YouTube</span>
                 </a>
                 <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 bg-gray-900 rounded-2xl hover:bg-blue-600 transition-colors group">
                   <Facebook className="group-hover:scale-110 transition-transform" />
-                  <span>Facebook</span>
+                  <span className="font-bold">Facebook</span>
                 </a>
                 <a href={SOCIAL_LINKS.x} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 bg-gray-900 rounded-2xl hover:bg-gray-700 transition-colors group">
                   <Twitter className="group-hover:scale-110 transition-transform" />
-                  <span>X (Twitter)</span>
+                  <span className="font-bold">X (Twitter)</span>
                 </a>
               </div>
 
@@ -92,7 +92,7 @@ const Contact: React.FC = () => {
                   <Send size={24} />
                   <div>
                     <p className="font-bold text-lg">Precisa de ajuda urgente?</p>
-                    <p className="text-sm font-medium opacity-80">Nosso suporte via WhatsApp é 24/7 para emergências.</p>
+                    <p className="text-sm font-medium opacity-80">Nosso suporte via WhatsApp é prioritário para emergências.</p>
                   </div>
                 </div>
               </div>
