@@ -147,6 +147,31 @@ export const INITIAL_PRODUCTS: Product[] = [
     variations: [
       { name: 'Uni TV Código Mensal', price: 30.00 }
     ]
+  },
+  {
+    id: 'recarga-claro',
+    name: 'Recarga Claro',
+    description: 'Mais barato do mercado! EX: Paga R$ 100 de crédito.',
+    image: 'https://picsum.photos/seed/claro/400/300',
+    category: 'Recarga',
+    variations: [
+      { name: 'R$100.00 de crédito', price: 70.00 },
+      { name: 'R$50.00 de crédito', price: 40.00 },
+      { name: 'R$30.00 de crédito', price: 27.00 }
+    ]
+  },
+  {
+    id: 'recarga-tim',
+    name: 'Recarga TIM',
+    description: 'Mais barato do mercado! EX: Paga R$ 100 de crédito.',
+    image: 'https://picsum.photos/seed/tim/400/300',
+    category: 'Recarga',
+    variations: [
+      { name: 'R$100.00 de crédito', price: 70.00 },
+      { name: 'R$50.00 de crédito', price: 40.00 },
+      { name: 'R$40.00 de crédito', price: 35.00 },
+      { name: 'R$30.00 de crédito', price: 27.00 }
+    ]
   }
 ];
 
