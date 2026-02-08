@@ -9,7 +9,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     image: 'https://picsum.photos/seed/netflix/400/300',
     category: 'Streaming',
     variations: [
-      { name: 'Netflix Premium ( Tela ) Mensal', price: 25.00 }
+      { name: 'Netflix Premium ( Tela ) Mensal', price: 25.00 },
+      { name: 'Netflix Padrão Com Anúncio ( Tela ) Mensal', price: 15.00 }
     ]
   },
   {
@@ -29,7 +30,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     image: 'https://picsum.photos/seed/hbomax/400/300',
     category: 'Streaming',
     variations: [
-      { name: 'HBO MAX ( Tela ) Mensal', price: 20.00 }
+      { name: 'HBO MAX ( Tela ) Mensal', price: 20.00 },
+      { name: 'HBO MAX ( Conta ) Mensal', price: 25.00 }
     ]
   },
   {
@@ -60,7 +62,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     image: 'https://picsum.photos/seed/prime/400/300',
     category: 'Streaming',
     variations: [
-      { name: 'PRIME + HBO MAX + APPLE TV + PARAMOUNT + TELECINE+CRUNCHYROLL ( Tela ) Mensal', price: 30.00 }
+      { name: 'PRIME + HBO MAX + APPLE TV + PARAMOUNT + TELECINE+CRUNCHYROLL ( Tela ) Mensal', price: 30.00 },
+      { name: 'PRIME + HBO MAX + PARAMOUNT ( Tela ) Mensal', price: 20.00 },
+      { name: 'PRIME + PREMIRE + CANAIS GLOBO ( Tela ) Mensal', price: 20.00 }
     ]
   },
   {
@@ -135,7 +139,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     category: 'Streaming',
     variations: [
       { name: 'Paramount + ( Conta ) Mensal', price: 20.00 },
-      { name: 'Paramount + ( Tela ) Mensal', price: 15.00 }
+      { name: 'Paramount + ( Tela ) Mensal', price: 15.00 },
+      { name: 'PARAMOUNT + UFC ( Conta ) Mensal', price: 20.00 },
+      { name: 'PARAMOUNT + UFC ( Tela ) Mensal', price: 20.00 }
     ]
   },
   {
@@ -171,6 +177,18 @@ export const INITIAL_PRODUCTS: Product[] = [
       { name: 'R$50.00 de crédito', price: 40.00 },
       { name: 'R$40.00 de crédito', price: 35.00 },
       { name: 'R$30.00 de crédito', price: 27.00 }
+    ]
+  },
+  {
+    id: 'claro-tv',
+    name: 'Claro TV',
+    description: 'Assista tudo do bom e do melhor com a Claro TV no menor preço do Brasil.',
+    image: 'https://picsum.photos/seed/clarotv/400/300',
+    category: 'Streaming',
+    variations: [
+      { name: 'CLARO TV COMPLETO ( Tela ) Anual', price: 85.00 },
+      { name: 'CLARO TV + PREMIERE ( Tela ) 2 Meses', price: 30.00 },
+      { name: 'CLARO TV + PREMIERE ( Tela ) 3 Meses', price: 35.00 }
     ]
   }
 ];
