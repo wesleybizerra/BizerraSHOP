@@ -19,9 +19,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     
     setIsLoading(true);
     try {
-      const BACKEND_URL = 'https://bizerrashop-production.up.railway.app'; 
-      
-      const response = await fetch(`${BACKEND_URL}/create_preference`, {
+      const response = await fetch('/api/create_preference', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
